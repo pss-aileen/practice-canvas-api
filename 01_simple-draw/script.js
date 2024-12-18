@@ -13,22 +13,39 @@
   if (canvas.getContext) {
     const ctx = canvas.getContext('2d');
 
-    const test = canvas.getBoundingClientRect();
-    console.log(test);
+    // canvasのサイズ、位置情報を取得
+    const canvasElementInfo = canvas.getBoundingClientRect();
+    console.log(canvasElementInfo);
 
-    ctx.fillRect(10, 10, 100, 100);
+    // x、yを定義、のちにマウスの位置との計算に使用
+    const canvasX = canvasElementInfo.x;
+    const canvasY = canvasElementInfo.y;
+    console.log(canvasX, canvasY);
 
     let isDrawing = false;
 
-    canvas.addEventListener('mousedown', (e) => {
-      isDrawing = !isDrawing;
+    /* 
+    - mousedown: もちろんマウスをおろしたとき、クリックした時発動する
+    - mouseenter, mouseleave, mouseout -> 画面領域に入った時、出た時まわりの動き
+    - mousemove: 要素にはいって動いている間
+    */
+    window.addEventListener('mousedown', (e) => {
+      isDrawing = true;
+      console.log('mouse down');
+      console.log(e.clientX - canvasX, e.clientY - canvasY);
+      ctx.fillRect(e.clientX - canvasX, e.clientY - canvasY, 5, 5);
 
       canvas.addEventListener('mousemove', (e) => {
         if (isDrawing) {
           console.log(e.clientX, e.clientY);
-          ctx.fillRect(e.clientX, e.clientY, 5, 5);
+          ctx.fillRect(e.clientX - canvasX, e.clientY - canvasY, 5, 5);
         }
       });
+    });
+
+    window.addEventListener('mouseup', (e) => {
+      isDrawing = false;
+      console.log('mouse up');
     });
   } else {
     console.warn('There is no support.');
