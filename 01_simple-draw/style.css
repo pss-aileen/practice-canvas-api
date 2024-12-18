@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+* {
+  /* box-sizing: border-box; */
+}
+
+body {
+  margin: 0;
+}
+
+/* 
+  [QUESTION] カンバスのサイズが、border-boxを設定しても、ボーダー分大きくなってしまうのはなぜか？
+  - memo: https://werwer.blog.jp/archives/41137120.html
+  - 現状の見解
+    - canvasサイズは描画にしっかりと影響があるため、ボーダーが内側に入らないのではないだろうか？
+    - そのため、500pxに1pxを追加すると502pxになってしまう。
+    - もやもやとはするが、一旦それで進める
+ */
+#canvas {
+  display: block;
+  margin: 48px auto;
+  border: 1px solid #000;
+}
