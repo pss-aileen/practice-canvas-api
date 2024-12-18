@@ -10,16 +10,24 @@
   // カンバスを枠でくくるには
   const canvas = document.getElementById('canvas');
 
-  // マウスダウンしてる間は？？
-  let isDrawing = false;
+  if (canvas.getContext) {
+    const ctx = canvas.getContext('2d');
 
-  window.addEventListener('mousedown', (e) => {
-    isDrawing = !isDrawing;
+    ctx.fillRect(10, 10, 100, 100);
 
-    window.addEventListener('mousemove', (e) => {
-      if (isDrawing) {
-        console.log(e.clientX, e.clientY);
-      }
+    let isDrawing = false;
+
+    canvas.addEventListener('mousedown', (e) => {
+      isDrawing = !isDrawing;
+
+      canvas.addEventListener('mousemove', (e) => {
+        if (isDrawing) {
+          console.log(e.clientX, e.clientY);
+          ctx.fillRect(e.clientX, e.clientY, 5, 5);
+        }
+      });
     });
-  });
+  } else {
+    console.warn('There is no support.');
+  }
 }
