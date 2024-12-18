@@ -13,6 +13,9 @@
   if (canvas.getContext) {
     const ctx = canvas.getContext('2d');
 
+    const test = canvas.getBoundingClientRect();
+    console.log(test);
+
     ctx.fillRect(10, 10, 100, 100);
 
     let isDrawing = false;
