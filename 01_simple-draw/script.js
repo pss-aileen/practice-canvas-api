@@ -26,6 +26,11 @@
 
     /* 
       [PROBLEM] 絵をかけるようになったけど、マウスをはやく動かすと線が途切れる
+      - beginPath, lineTo()
+    */
+
+    /* 
+      線のデザイン: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Applying_styles_and_colors#line_styles
     */
 
     /* 
@@ -33,27 +38,32 @@
     - mouseenter, mouseleave, mouseout -> 画面領域に入った時、出た時まわりの動き
     - mousemove: 要素にはいって動いている間
     */
-    window.addEventListener('mousedown', (e) => {
+    canvas.addEventListener('mousedown', (e) => {
       isDrawing = true;
-      console.log('mouse down');
-      // console.log(e.clientX - canvasX, e.clientY - canvasY);
-      // ctx.fillRect(e.clientX - canvasX, e.clientY - canvasY, 5, 5);
 
       ctx.beginPath();
+      ctx.strokeStyle = '#ff1493';
+      ctx.lineWidth = 8;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+
+      ctx.lineTo(e.clientX - canvasX, e.clientY - canvasY);
+      ctx.stroke();
 
       canvas.addEventListener('mousemove', (e) => {
         if (isDrawing) {
-          // console.log(e.clientX, e.clientY);
-          // ctx.fillRect(e.clientX - canvasX, e.clientY - canvasY, 5, 5);
           ctx.lineTo(e.clientX - canvasX, e.clientY - canvasY);
           ctx.stroke();
         }
       });
     });
 
-    window.addEventListener('mouseup', (e) => {
+    canvas.addEventListener('mouseup', (e) => {
       isDrawing = false;
-      console.log('mouse up');
+    });
+
+    canvas.addEventListener('mouseout', (e) => {
+      isDrawing = false;
     });
   } else {
     console.warn('There is no support.');
