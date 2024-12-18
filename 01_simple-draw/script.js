@@ -25,6 +25,10 @@
     let isDrawing = false;
 
     /* 
+      [PROBLEM] 絵をかけるようになったけど、マウスをはやく動かすと線が途切れる
+    */
+
+    /* 
     - mousedown: もちろんマウスをおろしたとき、クリックした時発動する
     - mouseenter, mouseleave, mouseout -> 画面領域に入った時、出た時まわりの動き
     - mousemove: 要素にはいって動いている間
@@ -32,13 +36,17 @@
     window.addEventListener('mousedown', (e) => {
       isDrawing = true;
       console.log('mouse down');
-      console.log(e.clientX - canvasX, e.clientY - canvasY);
-      ctx.fillRect(e.clientX - canvasX, e.clientY - canvasY, 5, 5);
+      // console.log(e.clientX - canvasX, e.clientY - canvasY);
+      // ctx.fillRect(e.clientX - canvasX, e.clientY - canvasY, 5, 5);
+
+      ctx.beginPath();
 
       canvas.addEventListener('mousemove', (e) => {
         if (isDrawing) {
-          console.log(e.clientX, e.clientY);
-          ctx.fillRect(e.clientX - canvasX, e.clientY - canvasY, 5, 5);
+          // console.log(e.clientX, e.clientY);
+          // ctx.fillRect(e.clientX - canvasX, e.clientY - canvasY, 5, 5);
+          ctx.lineTo(e.clientX - canvasX, e.clientY - canvasY);
+          ctx.stroke();
         }
       });
     });
