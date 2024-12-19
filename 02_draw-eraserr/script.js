@@ -38,7 +38,8 @@
     let isDrawing = false;
 
     const pathHistory = [];
-    let currentPath = [];
+    let currentPaths = [];
+    let nextPaths = [];
 
     canvas.addEventListener('mousedown', (e) => {
       const mouseX = e.clientX - canvasX;
@@ -57,7 +58,7 @@
       // クリック開始時に描画
       ctx.lineTo(mouseX, mouseY);
       ctx.stroke();
-      currentPath.push({ x: mouseX, y: mouseY });
+      currentPaths.push({ x: mouseX, y: mouseY });
 
       // マウスを動かすと描画
       canvas.addEventListener('mousemove', (e) => {
@@ -66,7 +67,7 @@
           const mouseY = e.clientY - canvasY;
           ctx.lineTo(mouseX, mouseY);
           ctx.stroke();
-          currentPath.push({ x: mouseX, y: mouseY });
+          currentPaths.push({ x: mouseX, y: mouseY });
         }
       });
     });
@@ -74,8 +75,8 @@
     canvas.addEventListener('mouseup', (e) => {
       if (isDrawing) {
         isDrawing = false;
-        pathHistory.push(currentPath);
-        currentPath = [];
+        pathHistory.push(currentPaths);
+        currentPaths = [];
         console.table(pathHistory);
       }
     });
@@ -83,8 +84,8 @@
     canvas.addEventListener('mouseout', (e) => {
       if (isDrawing) {
         isDrawing = false;
-        pathHistory.push(currentPath);
-        currentPath = [];
+        pathHistory.push(currentPaths);
+        currentPaths = [];
         console.table(pathHistory);
       }
     });
