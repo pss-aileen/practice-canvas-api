@@ -1,7 +1,31 @@
 @charset "utf-8";
 
+* {
+  box-sizing: border-box;
+}
+
+body {
+  text-align: center;
+  padding: 48px 0;
+}
+
+button {
+  all: unset;
+  box-sizing: border-box;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+button:active {
+  opacity: 0.6;
+}
+
+button + button {
+  margin-left: 16px;
+}
+
 #canvas {
   display: block;
   border: 1px solid;
-  margin: 48px auto;
+  margin: 24px auto;
 }

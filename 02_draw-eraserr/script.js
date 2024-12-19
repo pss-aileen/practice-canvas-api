@@ -11,6 +11,8 @@
     [PROBLEM] x, ylineto,strokeあたりを関数化するとなぜか動かなかった
     - drawごとにやらないとだめかも
     - たぶん、関数宣言位置がmousedownの中身で、おかしなことになってたのかも。
+    [PROBLEM] マウスがcanvasから出ると線ストップ
+    - 将来的に: canvasの外に出て、描画していたとして、それが戻ってきた時に出た時の線と、入ってきた時の線が繋がるのはやめたい。
   */
 
   /* 
@@ -70,16 +72,21 @@
     });
     // マウスアップすると線ストップ
     canvas.addEventListener('mouseup', (e) => {
-      isDrawing = false;
-      pathHistory.push(currentPath);
-      currentPath = [];
-      console.table(pathHistory);
+      if (isDrawing) {
+        isDrawing = false;
+        pathHistory.push(currentPath);
+        currentPath = [];
+        console.table(pathHistory);
+      }
     });
 
-    // マウスがcanvasから出ると線ストップ
-    // 将来的に: canvasの外に出て、描画していたとして、それが戻ってきた時に出た時の線と、入ってきた時の線が繋がるのはやめたい。
     canvas.addEventListener('mouseout', (e) => {
-      isDrawing = false;
+      if (isDrawing) {
+        isDrawing = false;
+        pathHistory.push(currentPath);
+        currentPath = [];
+        console.table(pathHistory);
+      }
     });
   } else {
     console.warn('There is no support.');
